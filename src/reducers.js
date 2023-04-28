@@ -1,3 +1,4 @@
+import { NOT_EKLE } from "./actions";
 const s10chLocalStorageKey = "s10ch";
 
 const baslangicDegerleri = {
@@ -24,6 +25,17 @@ function baslangicNotlariniGetir(key) {
   if (eskiNotlar) {
     return localStorageStateOku(key);
   } else {
-    return baslangicDegerleri
+    return baslangicDegerleri;
+  }
+}
+export function reducer(state = baslangicDegerleri, action) {
+  switch (action.type) {
+    case NOT_EKLE:
+      return {
+        ...state,
+        notlar: [...state.notlar, action.payload],
+      };
+    default:
+      return state;
   }
 }
