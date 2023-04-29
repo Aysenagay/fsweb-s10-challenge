@@ -1,4 +1,4 @@
-import { NOT_EKLE } from "./actions";
+import { NOT_EKLE, NOT_SIL } from "./actions";
 const s10chLocalStorageKey = "s10ch";
 
 const baslangicDegerleri = {
@@ -19,7 +19,7 @@ function localStorageStateOku(key) {
   return JSON.parse(localStorage.getItem(key));
 }
 
-function baslangicNotlariniGetir(key) {
+export function baslangicNotlariniGetir(key) {
   const eskiNotlar = localStorage.getItem(key);
 
   if (eskiNotlar) {
@@ -28,13 +28,28 @@ function baslangicNotlariniGetir(key) {
     return baslangicDegerleri;
   }
 }
-export function reducer(state = baslangicDegerleri, action) {
+export function reducer(
+  state = baslangicNotlariniGetir(s10chLocalStorageKey),
+  action
+) {
   switch (action.type) {
     case NOT_EKLE:
-      return {
+      const newNotEkle = {
         ...state,
         notlar: [...state.notlar, action.payload],
       };
+      localStorageStateYaz(s10chLocalStorageKey, newNotEkle);
+      return newNotEkle;
+
+    case NOT_SIL:
+      const newNotSil = {
+        ...state,
+        notlar: [...state.notlar.filter((note) => note.id !== action.payload)],
+      };
+
+      localStorageStateYaz(s10chLocalStorageKey, newNotSil);
+      return newNotSil;
+
     default:
       return state;
   }

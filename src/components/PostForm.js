@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { nanoid } from "nanoid";
 import { useHistory } from "react-router";
 import Gratitude from "./../assets/grForm.png";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { baslangicNotlariniGetir } from "../reducers";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { notEkleAPI } from "../actions";
+
+const bildirim = () => toast("NOTUNUZ EKLENDİ!");
 
 export default function PostForm() {
   const {
@@ -16,6 +20,10 @@ export default function PostForm() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    baslangicNotlariniGetir();
+  }, []);
 
   function onSubmit(data) {
     const yeniNot = {
@@ -28,10 +36,10 @@ export default function PostForm() {
 
     // burada ilgili eylemi dispatch edin
     dispatch(notEkleAPI(yeniNot));
+    bildirim();
     // toast mesajı gösterin
-    //toast("Not Başarıyla Eklendi!");
     // sonra aşağıdaki satırı aktifleştirin
-    //setTimeout(() => history.push("/notlar"), 2000);
+    setTimeout(() => history.push("/notlar"), 2000);
   }
 
   const inputCx = "border border-zinc-300 h-9 rounded-none text-sm px-2 w-full";
@@ -84,6 +92,18 @@ export default function PostForm() {
         <button type="submit" className="myButton">
           Ekle
         </button>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </form>
     </div>
   );

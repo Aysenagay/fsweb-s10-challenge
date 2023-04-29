@@ -8,7 +8,7 @@ export function notEkle(not) {
 }
 
 export function notSil(notId) {
-  // ...
+  return { type: NOT_SIL, payload: notId };
 }
 
 export const notEkleAPI = (yeniNot) => (dispatch) => {
@@ -18,7 +18,7 @@ export const notEkleAPI = (yeniNot) => (dispatch) => {
       if (res.status === 200) {
         // res.data objesi içerisinden ihtiyaç duyduğunuz değeri bulun ve oluşturduğunuz notEkle ile dispatch edin
         dispatch(notEkle(res.data));
-        console.log("notEkleAPI", res.data);
+        console.log("notEkleAPI", res.data.json);
       }
     })
     .catch((error) => console.log(error));
@@ -31,6 +31,7 @@ export const notSilAPI = (id) => (dispatch) => {
     .then((res) => {
       if (res.status === 200) {
         // res.data objesi içerisinden ihtiyaç duyduğunuz değeri bulun ve oluşturduğunuz notSil ile dispatch edin
+        dispatch(notSil(res.data.data));
       }
     })
     .catch((error) => console.log(error));
