@@ -1,7 +1,7 @@
 import axios from "axios";
-
 export const NOT_EKLE = "NOT_EKLE";
 export const NOT_SIL = "NOT_SIL";
+export const TUMUNU_SIL = "TUMUNU_SIL";
 
 export function notEkle(not) {
   return { type: NOT_EKLE, payload: not };
@@ -9,6 +9,10 @@ export function notEkle(not) {
 
 export function notSil(notId) {
   return { type: NOT_SIL, payload: notId };
+}
+
+export function tumunuSil() {
+  return { type: TUMUNU_SIL };
 }
 
 export const notEkleAPI = (yeniNot) => (dispatch) => {

@@ -1,4 +1,5 @@
-import { NOT_EKLE, NOT_SIL } from "./actions";
+import { NOT_EKLE, NOT_SIL, TUMUNU_SIL } from "./actions";
+
 const s10chLocalStorageKey = "s10ch";
 
 const baslangicDegerleri = {
@@ -35,8 +36,7 @@ export function reducer(
   switch (action.type) {
     case NOT_EKLE:
       const newNotEkle = {
-        ...state,
-        notlar: [...state.notlar, action.payload],
+        notlar: [action.payload, ...state.notlar],
       };
       localStorageStateYaz(s10chLocalStorageKey, newNotEkle);
       return newNotEkle;
@@ -49,6 +49,11 @@ export function reducer(
 
       localStorageStateYaz(s10chLocalStorageKey, newNotSil);
       return newNotSil;
+
+    case TUMUNU_SIL:
+      const removedAllState = { ...state, notlar: [] };
+      localStorageStateYaz(s10chLocalStorageKey, []);
+      return removedAllState;
 
     default:
       return state;
