@@ -29,32 +29,39 @@ export function baslangicNotlariniGetir(key) {
     return baslangicDegerleri;
   }
 }
+
 export function reducer(
   state = baslangicNotlariniGetir(s10chLocalStorageKey),
   action
 ) {
   switch (action.type) {
     case NOT_EKLE:
-      const newNotEkle = {
+      console.log("not eklendi");
+      const updatedState = {
+        ...state,
         notlar: [action.payload, ...state.notlar],
       };
-      localStorageStateYaz(s10chLocalStorageKey, newNotEkle);
-      return newNotEkle;
+      localStorageStateYaz(s10chLocalStorageKey, updatedState);
+      return updatedState;
 
     case NOT_SIL:
-      const newNotSil = {
+      console.log("not silindi");
+      const removedState = {
         ...state,
         notlar: [...state.notlar.filter((note) => note.id !== action.payload)],
       };
 
-      localStorageStateYaz(s10chLocalStorageKey, newNotSil);
-      return newNotSil;
+      localStorageStateYaz(s10chLocalStorageKey, removedState);
+      return removedState;
 
     case TUMUNU_SIL:
-      const removedAllState = { ...state, notlar: [] };
-      localStorageStateYaz(s10chLocalStorageKey, []);
+      console.log("notlarım tamamı silindi");
+      const removedAllState = {
+        ...state,
+        notlar: [],
+      };
+      localStorageStateYaz(s10chLocalStorageKey, removedAllState);
       return removedAllState;
-
     default:
       return state;
   }

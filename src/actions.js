@@ -1,4 +1,5 @@
 import axios from "axios";
+
 export const NOT_EKLE = "NOT_EKLE";
 export const NOT_SIL = "NOT_SIL";
 export const TUMUNU_SIL = "TUMUNU_SIL";
@@ -21,8 +22,8 @@ export const notEkleAPI = (yeniNot) => (dispatch) => {
     .then((res) => {
       if (res.status === 200) {
         // res.data objesi içerisinden ihtiyaç duyduğunuz değeri bulun ve oluşturduğunuz notEkle ile dispatch edin
-        dispatch(notEkle(res.data));
-        console.log("notEkleAPI", res.data.json);
+        dispatch(notEkle(res.data.json));
+        console.log("not api'ya ulaştı", res.data.json);
       }
     })
     .catch((error) => console.log(error));

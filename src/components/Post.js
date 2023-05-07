@@ -6,15 +6,16 @@ import { notSilAPI } from "../actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const bildirim = () => toast("Notunuz Silindi");
+const notify = () => toast("MİNNETİNİZ SİLİNİYOR ");
 
 export default function Post({ item }) {
   const dispatch = useDispatch();
+
   function handleSil() {
     // burada ilgili eylemi dispatch edin
     // sonra toast mesajı gösterin
     dispatch(notSilAPI(item.id));
-    bildirim();
+    notify();
   }
 
   return (
@@ -39,8 +40,9 @@ export default function Post({ item }) {
         Bu notu sil
       </button>
       <ToastContainer
-        position="top-center"
-        autoClose={5000}
+        position="top-right"
+        autoClose={4998}
+        limit={1}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -48,7 +50,7 @@ export default function Post({ item }) {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme="colored"
       />
     </div>
   );

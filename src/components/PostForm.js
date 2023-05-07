@@ -4,12 +4,12 @@ import { nanoid } from "nanoid";
 import { useHistory } from "react-router";
 import Gratitude from "./../assets/grForm.png";
 import { useDispatch } from "react-redux";
+import { notEkleAPI } from "../actions";
 import { baslangicNotlariniGetir } from "../reducers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { notEkleAPI } from "../actions";
 
-const bildirim = () => toast("NOTUNUZ EKLENDİ!");
+const notify = () => toast("MİNNETİNİZ EKLENİYOR 🥰🥳🤩");
 
 export default function PostForm() {
   const {
@@ -18,8 +18,8 @@ export default function PostForm() {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const dispatch = useDispatch();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     baslangicNotlariniGetir();
@@ -34,12 +34,14 @@ export default function PostForm() {
         .join("|"),
     };
 
-    // burada ilgili eylemi dispatch edin
     dispatch(notEkleAPI(yeniNot));
-    bildirim();
+    notify();
+
+    setTimeout(() => history.push("/notlar"), 2000);
+
+    // burada ilgili eylemi dispatch edin
     // toast mesajı gösterin
     // sonra aşağıdaki satırı aktifleştirin
-    setTimeout(() => history.push("/notlar"), 2000);
   }
 
   const inputCx = "border border-zinc-300 h-9 rounded-none text-sm px-2 w-full";
@@ -93,8 +95,9 @@ export default function PostForm() {
           Ekle
         </button>
         <ToastContainer
-          position="top-center"
-          autoClose={5000}
+          position="top-right"
+          autoClose={4998}
+          limit={1}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
